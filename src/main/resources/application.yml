@@ -1,23 +1,10 @@
 spring:
   application:
-    name: bookpli_book
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-    url: ${DB_URL}
+    name: musicservice
+  profiles:
+    active: ${SPOTIFY_ACTIVE:dev-sam}
   config:
-    import: optional:file:.env[.properties]
-  jpa:
-    hibernate:
-      ddl-auto: none
-    generate-ddt: true
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQLDialect
+    import: "configserver:http://admin:1234@localhost:9000"
 
 logging:
   level:
@@ -26,5 +13,16 @@ logging:
 
 server:
   port: 9000
+
+#    rabbitMQ
+rabbitmq:
+  exchange:
+    name1: reviewExchange
+  queue:
+    q1: reviewq
+  routing:
+    topickey: review.#
+
+
 
 
