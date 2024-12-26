@@ -2,6 +2,7 @@ package com.example.bookpli_book.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,4 +28,24 @@ public class User {
     private String refreshToken;
 
     private String role;
+
+    @Builder
+    public User(Long userId, String spotifyId, String displayName, String userNickname, String email, String profilePath, String refreshToken, String role) {
+        this.userId = userId;
+        this.spotifyId = spotifyId;
+        this.displayName = displayName;
+        this.userNickname = userNickname;
+        this.email = email;
+        this.profilePath = profilePath;
+        this.refreshToken = refreshToken;
+        this.role = role;
+    }
+
+    public void updateRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+    public void updateNickName(String userNickname){
+        this.userNickname = userNickname;
+    }
 }

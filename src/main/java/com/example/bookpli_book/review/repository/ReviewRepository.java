@@ -12,4 +12,9 @@ import java.util.List;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
+    // 유저 리뷰 조회
+    List<Review> findByUserId(@Param("userId") long userId);
+
+    //도서 리뷰 조회
+    List<Review> findByIsbn13(@Param("isbn13") String isbn13);
 }
