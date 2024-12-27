@@ -15,7 +15,7 @@ public class PostLikeController {
 
     private final PostLikeService postLikeService;
 
-    // 게시글에 대한 좋아요 수 조회
+    // 게시글에 대한 좋아요 수 조회 g
     @GetMapping("/{postId}")
     public BaseResponse<Integer>likeCount (@PathVariable Long postId){
         try {
