@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -25,4 +26,14 @@ public class Comment {
 
     @CreationTimestamp
     private LocalDate commentDate;
+
+    @Builder
+    public Comment(Long commentId, Long userId, Long postId,
+                   String commentContent, LocalDate commentDate){
+        this.commentId = commentId;
+        this.userId = userId;
+        this.postId = postId;
+        this.commentContent = commentContent;
+        this.commentDate = commentDate;
+    }
 }

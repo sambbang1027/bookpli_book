@@ -15,4 +15,11 @@ public class CommentLike {
     private Long commentLikeId;
     private Long commentId;
     private Long userId;
+
+    @Builder
+    public CommentLike(Long commentLikeId, Long commentId, Long userId){
+        this.commentLikeId = commentLikeId;
+        this.commentId = commentId;
+        this.userId = userId;
+    }
 }
