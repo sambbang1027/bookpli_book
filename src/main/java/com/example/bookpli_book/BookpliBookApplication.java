@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
-@SpringBootApplication//(exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
+@SpringBootApplication(scanBasePackages = "com.example.bookpli_book")
 public class BookpliBookApplication {
 
 	public static void main(String[] args) {

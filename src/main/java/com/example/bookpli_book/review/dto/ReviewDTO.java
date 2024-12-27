@@ -22,19 +22,6 @@ public class ReviewDTO {
     private String profilePath;
 
 
-    // 엔티티를 DTO로 변환하는 메서드
-    public static ReviewDTO fromEntityForBook(Review review, String cover, String title) {
-        return ReviewDTO.builder()
-                .reviewId(review.getReviewId())
-                .userId(review.getUserId())
-                .isbn13(review.getIsbn13())
-                .reviewContent(review.getReviewContent())
-                .rating(review.getRating())
-                .cover(cover)
-                .title(title)
-                .build();
-    }
-
     // dto -> entity
     public Review toEntity(){
         return Review.builder()
@@ -46,5 +33,15 @@ public class ReviewDTO {
                 .build();
     }
 
+    // 엔티티를 DTO로 변환하는 메서드
+    public static ReviewDTO fromEntity(Review review) {
+        return ReviewDTO.builder()
+                .reviewId(review.getReviewId())
+                .userId(review.getUserId())
+                .isbn13(review.getIsbn13())
+                .reviewContent(review.getReviewContent())
+                .rating(review.getRating())
+                .build();
+    }
 
 }

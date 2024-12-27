@@ -4,6 +4,7 @@ import com.example.bookpli_book.book.dto.BookDTO;
 import com.example.bookpli_book.book.repository.BookRepository;
 import com.example.bookpli_book.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class BookApiService {
 
     private final String TTB_KEY = "ttbsumini0911820002";
