@@ -16,6 +16,8 @@ public class MiniroomController {
     @Autowired
     private MiniRoomService miniRoomService;
 
+
+
     //담은 도서 리스트
     @GetMapping("/miniroom/user/{userId}/book")
     public ResponseEntity<List<BookResponseDTO>> getBookList(@PathVariable Long userId,

@@ -20,11 +20,11 @@ public class BookFeignController {
     private final BookService bookService;
 
     @GetMapping("/review")
-    public BaseResponse<List<BookDTO>> getBookByisbn(@RequestParam List<String>isbns){
+    public List<BookDTO> getBookByisbn(@RequestParam List<String>isbns){
         List<BookDTO> list = isbns.stream()
                 .map(isbn ->bookService.getBookDetail(isbn))
                 .collect(Collectors.toList());
-        return new BaseResponse<>(list);
+        return list;
     }
 
 }

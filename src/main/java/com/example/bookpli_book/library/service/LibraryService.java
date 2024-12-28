@@ -102,8 +102,9 @@ public class LibraryService {
     }
 
     public List<BookLikeDTO> getBookLikesByUserId(Long userId) {
-        bookLikeRepository.findById(userId)
-                .orElseThrow(() -> new BaseException(BaseResponseStatus.USER_NOT_FOUND));
+        System.out.println("서비스단 도착");
+//        bookLikeRepository.findById(userId) // 이게 가능한 부분인가 ..?
+//                .orElseThrow(() -> new BaseException(BaseResponseStatus.USER_NOT_FOUND));
 
         List<BookLike> bookLikes = bookLikeRepository.findAllByUserId(userId);
 
