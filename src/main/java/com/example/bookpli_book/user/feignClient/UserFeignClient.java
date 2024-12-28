@@ -1,14 +1,13 @@
-package com.example.bookpli_book.mypage.feignClient;
+package com.example.bookpli_book.user.feignClient;
 
-import com.example.bookpli_book.common.response.BaseResponse;
-import com.example.bookpli_book.mypage.dto.UserDTO;
+import com.example.bookpli_book.user.dto.UserDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@FeignClient(name = "user-service", url = "http://localhost:9001")
+@FeignClient(name = "authservice", url = "http://localhost:9003")
 public interface UserFeignClient {
 
     @GetMapping("/user/review")

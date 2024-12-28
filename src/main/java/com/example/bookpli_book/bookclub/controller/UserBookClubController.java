@@ -13,7 +13,7 @@ import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/api/userbookclub")
+@RequestMapping("/bookservice")
 @RestController
 public class UserBookClubController {
 
@@ -21,7 +21,7 @@ public class UserBookClubController {
 
     // 유저의 북클럽 추가
     @Transactional
-    @PostMapping("/add/bookclub")
+    @PostMapping("/userbookclub/add/bookclub")
     public BaseResponse<Boolean> addBookClub(@RequestParam Long userId, @RequestParam String isbn13){
         boolean result;
         try {
@@ -44,7 +44,7 @@ public class UserBookClubController {
     }
 
     // 유저가 추가한 북클럽 조회
-    @GetMapping("/mybookclubs")
+    @GetMapping("/userbookclub/mybookclubs")
     public BaseResponse<List<UserBookClubDTO>> myclubs (@RequestParam Long userId) {
         try {
             List<UserBookClubDTO> list = userBookClubService.readMyBookClub(userId);
@@ -58,7 +58,7 @@ public class UserBookClubController {
     }
 
     // 북클럽 리스트에서 삭제
-    @DeleteMapping("/remove/myclub")
+    @DeleteMapping("/userbookclub/remove/myclub")
     public BaseResponse<Void>deleteMyclub (@RequestParam Long userClubId) {
         try {
             System.out.println("C : 삭제할 북클럽 id -> "+ userClubId);

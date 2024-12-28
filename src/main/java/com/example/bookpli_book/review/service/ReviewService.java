@@ -3,10 +3,9 @@ package com.example.bookpli_book.review.service;
 
 import com.example.bookpli_book.book.dto.BookDTO;
 import com.example.bookpli_book.book.feignClient.BookFeignClient;
-import com.example.bookpli_book.common.response.BaseResponse;
 import com.example.bookpli_book.entity.Review;
-import com.example.bookpli_book.mypage.dto.UserDTO;
-import com.example.bookpli_book.mypage.feignClient.UserFeignClient;
+import com.example.bookpli_book.user.dto.UserDTO;
+import com.example.bookpli_book.user.feignClient.UserFeignClient;
 import com.example.bookpli_book.review.dto.ReviewDTO;
 import com.example.bookpli_book.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;

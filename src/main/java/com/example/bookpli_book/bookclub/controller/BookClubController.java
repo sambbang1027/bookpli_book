@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/bookclub")
+@RequestMapping("/bookservice")
 public class BookClubController {
 
     private final BookClubService bookClubService;
@@ -24,7 +24,7 @@ public class BookClubController {
 
 
             //북클럽 생성
-    @PostMapping("/create")
+    @PostMapping("/bookclub/create")
     public BaseResponse<Void> createBookClub(@RequestParam String isbn){
         try {
             bookClubService.createBookClub(isbn);
@@ -36,7 +36,7 @@ public class BookClubController {
     }
 
             //북클럽 검색
-    @GetMapping("/search")
+    @GetMapping("/bookclub/search")
     public List<Map<String, Object>>searchBookclub(@RequestParam String keyword){
 
         RestTemplate restTemplate = new RestTemplate();

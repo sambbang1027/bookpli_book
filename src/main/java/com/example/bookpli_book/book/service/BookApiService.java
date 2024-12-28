@@ -3,6 +3,8 @@ package com.example.bookpli_book.book.service;
 import com.example.bookpli_book.book.dto.BookDTO;
 import com.example.bookpli_book.book.repository.BookRepository;
 import com.example.bookpli_book.entity.Book;
+import com.example.bookpli_book.library.repository.BookLikeRepository;
+import com.example.bookpli_book.library.repository.LibraryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -21,6 +23,11 @@ public class BookApiService {
     @Autowired
     private BookRepository bookrep;
 
+    @Autowired
+    private LibraryRepository librep;
+
+    @Autowired
+    private BookLikeRepository blrep;
 
     public Book searchBook(String itemId) {
         RestTemplate restTemplate = new RestTemplate();

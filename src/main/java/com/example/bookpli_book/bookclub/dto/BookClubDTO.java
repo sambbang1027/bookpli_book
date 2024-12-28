@@ -19,6 +19,16 @@ public class BookClubDTO {
     private String description;
 
 
+    // JPQL에서 사용할 생성자
+    public BookClubDTO(Bookclub bookClub, String title, String author, String description, String cover) {
+        this.bookClubId = bookClub.getBookClubId();
+        this.isbn13 = bookClub.getIsbn13();
+        this.title = title;
+        this.author = author;
+        this.cover = cover;
+        this.description = description;
+    }
+
         // DTO -> Entity 변환
     public Bookclub toEntity(){
         return Bookclub.builder()

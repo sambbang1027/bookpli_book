@@ -10,17 +10,3 @@ logging:
   level:
     org:
       hibernate: info
-
-
-#    rabbitMQ
-rabbitmq:
-  exchange:
-    name1: reviewExchange
-  queue:
-    q1: reviewq
-  routing:
-    topickey: review.#
-
-
-
-

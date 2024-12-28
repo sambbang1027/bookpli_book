@@ -2,12 +2,7 @@ package com.example.bookpli_book.comment.controller;
 
 import com.example.bookpli_book.comment.dto.CommentDTO;
 import com.example.bookpli_book.comment.service.CommentService;
-import com.example.bookpli_book.common.exception.BaseException;
 import com.example.bookpli_book.common.response.BaseResponse;
-import com.example.bookpli_book.common.response.BaseResponseStatus;
-import com.example.bookpli_book.entity.User;
-import com.example.bookpli_book.mypage.dto.UserDTO;
-import com.example.bookpli_book.mypage.service.MypageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -16,38 +11,28 @@ import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping ("/api/comment")
+@RequestMapping ("/bookservice")
 @RestController
 public class CommentController {
 
     private final CommentService commentService;
-    private final MypageService mypageService;
-
-    // 유저 정보 가져오기
-    @GetMapping("/info/{spotifyId}")
-    public BaseResponse<UserDTO> getInfoForComment(@PathVariable String spotifyId){
-        User info = mypageService.findBySpotifyId(spotifyId)
-                .orElseThrow(()-> new BaseException(BaseResponseStatus.USER_NOT_FOUND));
-        UserDTO userInfo = UserDTO.fromEntity(info);
-        return new BaseResponse<>(userInfo);
-    }
 
     // 게시글 댓글 조회
-    @GetMapping("/post/{postId}")
+    @GetMapping("/comment/post/{postId}")
     public BaseResponse<List<CommentDTO>> readAllByPost(@PathVariable Long postId){
         List<CommentDTO> comments = commentService.readCommentByPost(postId);
         return new BaseResponse<>(comments);
     }
 
     // 유저 전체 댓글 조회
-    @GetMapping("/user")
+    @GetMapping("/comment/user")
     public BaseResponse<List<CommentDTO>> readAllByUser(@RequestParam Long userId, @RequestParam Long bookClubId){
         List<CommentDTO> comments = commentService.readCommentByUser(userId, bookClubId);
         return new BaseResponse<>(comments);
     }
 
     // 댓글 등록
-    @PostMapping("/insert")
+    @PostMapping("/comment/insert")
     public BaseResponse<Boolean> registerComment (@RequestBody CommentDTO commentDTO){
         try {
           boolean response= commentService.insert(commentDTO);
@@ -61,7 +46,7 @@ public class CommentController {
     }
 
     // 댓글 수정
-    @PutMapping("/edit")
+    @PutMapping("/comment/edit")
     public BaseResponse<Boolean> editComment (@RequestBody CommentDTO commentDTO){
         try{
             boolean response = commentService.update(commentDTO);
@@ -75,7 +60,7 @@ public class CommentController {
     }
 
     // 댓글 삭제
-    @DeleteMapping("/delete")
+    @DeleteMapping("/comment/delete")
     public BaseResponse<Boolean> deleteComment(@RequestParam Long commentId){
         try{
             boolean response = commentService.delete(commentId);

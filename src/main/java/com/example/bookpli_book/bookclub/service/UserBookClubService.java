@@ -32,18 +32,28 @@ public class UserBookClubService {
         List<Object[]> list = userBookClubRepository.myBookClub(userId);
 
         if (list.isEmpty()) {
-            throw new NoSuchElementException("해당 유저의 북클럽이 없습니다.");
+            return Collections.emptyList();
         }
         // isbn 추출
         List<String> isbn13List = list.stream()
                 .map(objects -> (String) objects[1])  // 두 번째 요소가 isbn13
                 .collect(Collectors.toList());
 
-        // isbn13으로 book 정보를 가져와 Map으로 변환 (isbn13을 키로, BookDTO를 값으로)
-        Map<String, BookDTO> bookInfoMap = isbn13List.stream()
-                .map(isbn -> bookRepository.findByIsbn13(isbn))  // isbn13에 해당하는 책 정보 가져오기
-                .filter(Objects::nonNull)  // null인 값은 제외
-                .collect(Collectors.toMap(BookDTO::getIsbn13, book -> book));
+        // isbn13으로 책 정보를 한 번에 가져오기
+        List<Object[]> books = bookRepository.findBookDetails(isbn13List);  // 한 번에 조회
+
+        // isbn13을 키로, BookDTO를 값으로 가지는 맵 생성
+        Map<String, BookDTO> bookInfoMap = books.stream()
+                .collect(Collectors.toMap(
+                        book -> (String) book[0],
+                        book-> BookDTO.builder()
+                                .isbn13((String)book[0])
+                                .title((String) book[1])
+                                .cover((String) book[2])
+                                .description((String) book[3])
+                                .author((String) book[4])
+                                .build()
+                ));
 
         // UserBookclubDTO 리스트 생성
         List<UserBookClubDTO> myClubs = list.stream()
@@ -109,6 +119,7 @@ public class UserBookClubService {
         // 4. 유저의 북클럽 추가
         try {
             System.out.println("유저의 북클럽 리스트에 추가하겠습니다");
+            System.out.println(bookClub.getBookClubId()+ "check bookclubid");
             UserBookclub addClub = UserBookclub.builder()
                     .userId(userId)
                     .bookClubId(bookClub.getBookClubId())
