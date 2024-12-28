@@ -1,4 +1,4 @@
-package com.example.bookpli_book.mypage.dto;
+package com.example.bookpli_book.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

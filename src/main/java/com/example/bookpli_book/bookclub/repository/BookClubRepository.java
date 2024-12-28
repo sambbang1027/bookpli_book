@@ -1,5 +1,6 @@
 package com.example.bookpli_book.bookclub.repository;
 
+import com.example.bookpli_book.bookclub.dto.BookClubDTO;
 import com.example.bookpli_book.entity.Bookclub;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,10 +20,9 @@ public interface BookClubRepository extends JpaRepository<Bookclub, Long> {
     List<Object[]>findBookClubByName(@Param("key") String key);
 
     //북클럽 찾기
-    @Query("SELECT bc, b.title, b.cover, b.description, b.author " +
-            " FROM Bookclub bc " +
+    @Query("SELECT new com.example.bookpli_book.bookclub.dto.BookClubDTO(bc, b.title, b.author, b.description, b.cover) " +
+            "FROM Bookclub bc " +
             "JOIN Book b ON bc.isbn13 = b.isbn13 " +
-            "where b.isbn13 = :isbn13")
-    Bookclub findBookClubByIsbn(@Param("isbn13") String isbn13);
-
+            "WHERE b.isbn13 = :isbn13")
+    BookClubDTO findBookClubByIsbn(@Param("isbn13") String isbn13);
 }

@@ -13,7 +13,7 @@ import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/api/post")
+@RequestMapping("/bookservice")
 @RestController
 public class PostController {
 
@@ -21,7 +21,7 @@ public class PostController {
 
 
         // 해당 북클럽 전체 게시글 조회
-    @GetMapping("/bookclubs")
+    @GetMapping("/post/bookclubs")
     public BaseResponse<List<PostResponseDTO>> readPosts(@RequestParam  Long bookclubId){
        try {
          List<PostResponseDTO>list = postService.readClubPosts(bookclubId);
@@ -35,7 +35,7 @@ public class PostController {
     }
 
             // 유저가 등록한 게시글 조회
-    @GetMapping("/bookclub/mypost")
+    @GetMapping("/post/bookclub/mypost")
     public BaseResponse<List<PostResponseDTO>> readMyPost(@RequestParam Long userId, @RequestParam Long bookClubId){
      try{
          List<PostResponseDTO> myPost = postService.readUserPosts(userId,bookClubId);
@@ -49,7 +49,7 @@ public class PostController {
     }
 
         // 수정을 위한 데이터 조회
-    @GetMapping("/getOne")
+    @GetMapping("/post/getOne")
     public BaseResponse<PostResponseDTO> readOne (@RequestParam Long postId) {
         try{
             PostResponseDTO post = postService.readOne(postId);
@@ -61,7 +61,7 @@ public class PostController {
         }
     }
 
-    @GetMapping("/comment/readOne")
+    @GetMapping("/post/comment/readOne")
     public BaseResponse<PostResponseDTO>postForComment (@RequestParam Long postId){
         try {
             PostResponseDTO post = postService.readForComment(postId);
@@ -76,7 +76,7 @@ public class PostController {
     }
 
         //게시글 등록
-    @PostMapping("/insert")
+    @PostMapping("/post/insert")
     public BaseResponse<Boolean> postInsert(@RequestBody PostRequestDTO requestDTO){
         try {
 
@@ -90,7 +90,7 @@ public class PostController {
     }
 
             // 게시글 수정
-    @PutMapping("/edit")
+    @PutMapping("/post/edit")
     public BaseResponse<Boolean> postEdit(@RequestBody PostRequestDTO postRequestDTO){
         try {
             boolean result = postService.update(postRequestDTO);
@@ -107,7 +107,7 @@ public class PostController {
     }
 
     // 게시글 삭제
-    @DeleteMapping("/delete")
+    @DeleteMapping("/post/delete")
     public BaseResponse<Boolean> postRemove(@RequestParam Long postId){
         try {
             System.out.println("삭제하려는 게시글 : "+ postId);

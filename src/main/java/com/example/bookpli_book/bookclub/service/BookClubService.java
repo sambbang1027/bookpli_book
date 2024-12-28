@@ -38,7 +38,7 @@ public class BookClubService {
             }
 
             // BookClub 존재 여부 확인
-            Bookclub existingClub = bookClubRepository.findBookClubByIsbn(isbn13);
+            BookClubDTO existingClub = bookClubRepository.findBookClubByIsbn(isbn13);
             if (existingClub != null) {
                 System.out.println("이미 존재하는 북클럽입니다.");
                 return;
@@ -63,17 +63,8 @@ public class BookClubService {
         public BookClubDTO findBookClub (String isbn13){
 
             //해당 북클럽이 존재하는지 확인
-            Bookclub getClub = bookClubRepository.findBookClubByIsbn(isbn13);
-
-            BookClubDTO bookClub = null;
-            if (getClub != null) {
-
-                bookClub = BookClubDTO.fromEntity(getClub,
-                        bookClub.getTitle(), bookClub.getAuthor(), bookClub.getDescription(),
-                        bookClub.getCover());
-
-            }
-            return bookClub;
+            BookClubDTO getClub = bookClubRepository.findBookClubByIsbn(isbn13);
+            return getClub;
         }
 
 

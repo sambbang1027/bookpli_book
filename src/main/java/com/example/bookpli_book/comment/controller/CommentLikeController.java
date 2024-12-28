@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/api/commentlike")
+@RequestMapping("/bookservice")
 @RestController
 public class CommentLikeController {
 
     private final CommentLikeService commentLikeService;
 
     // 댓글에 대한 좋아요 수 조회
-    @GetMapping("/{commentId}")
+    @GetMapping("/commentlike/{commentId}")
     public BaseResponse<Integer> likeCount (@PathVariable Long commentId){
         try {
             int likes = commentLikeService.likeCount(commentId);
@@ -30,7 +30,7 @@ public class CommentLikeController {
     }
 
     // 좋아요 && 좋아요 취소
-    @RequestMapping(value = "/mylike", method = RequestMethod.POST)
+    @RequestMapping(value = "/commentlike/mylike", method = RequestMethod.POST)
     public BaseResponse<Boolean> mylike (@RequestBody CommentLikeDTO CommentLikeDTO){
         try {
             Boolean result = commentLikeService.commentLike(CommentLikeDTO);
@@ -43,7 +43,7 @@ public class CommentLikeController {
         }
     }
 
-    @GetMapping("/checking")
+    @GetMapping("/commentlike/checking")
     public BaseResponse<Boolean> checking ( @RequestParam Long commentId,@RequestParam Long userId){
         try{
             Boolean response = commentLikeService.checkingLike(commentId,userId);

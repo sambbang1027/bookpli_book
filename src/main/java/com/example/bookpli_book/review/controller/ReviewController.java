@@ -14,14 +14,14 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/review")
+@RequestMapping("/bookservice")
 @RequiredArgsConstructor
 public class ReviewController {
 
     private final ReviewService reviewService;
 
     // 해당 유저가 작성한 리뷰 전체 조회
-    @GetMapping("/myreview/{userId}")
+    @GetMapping("/review/myreview/{userId}")
     public BaseResponse<List<ReviewDTO>> getListByUserId (@PathVariable Long userId ){
         List<ReviewDTO> mylist = reviewService.readAllByIsbn(userId);
         System.out.println(mylist);
@@ -30,7 +30,7 @@ public class ReviewController {
     }
 
     // 해당 도서의 리뷰 전체 조회
-    @GetMapping("/book/{isbn13}")
+    @GetMapping("/review/book/{isbn13}")
     public BaseResponse<List<ReviewDTO>> getListByisbn (@PathVariable String isbn13){
         List<ReviewDTO> review = reviewService.readAllByUser(isbn13);
         System.out.println("컨트롤러 : 도서 리뷰 전체 출력 : "+ review);
@@ -40,7 +40,7 @@ public class ReviewController {
 
 
     // 리뷰 수정
-    @PutMapping("/update")
+    @PutMapping("/review/update")
     public BaseResponse<ReviewDTO> updateReview(@RequestBody ReviewDTO review) {
         log.info("우선 도착은 했니 ..?");
         try {
@@ -56,7 +56,7 @@ public class ReviewController {
     }
 
     //리뷰 등록
-    @PostMapping("/post")
+    @PostMapping("/review/post")
     public BaseResponse<Void> newReview (@RequestBody ReviewDTO reviewDTO){
 
         try{
@@ -73,7 +73,7 @@ public class ReviewController {
     }
 
     //리뷰 삭제
-    @DeleteMapping("/delete/{reviewId}")
+    @DeleteMapping("/review/delete/{reviewId}")
     public BaseResponse<Boolean> removeReview (@PathVariable Long reviewId) {
 
         System.out.println("컨트롤러 : 삭제할 리뷰 -> " + reviewId);

@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserBookclub {
     @Id
@@ -19,12 +18,12 @@ public class UserBookclub {
 
     private Long userId;
 
-    @Column(name = "bookclub_id", insertable = false, updatable = false)
+    @Column(name = "bookclub_id")
     private Long bookClubId;
 
 
-    public UserBookclub (Long userClubId, Long userId, Long bookClubId){
-        this.userClubId = userClubId;
+    @Builder
+    public UserBookclub ( Long userId, Long bookClubId){
         this.userId = userId;
         this.bookClubId = bookClubId;
     }

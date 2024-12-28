@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/book")
+@RequestMapping("bookservice")
 public class BookController {
     private final BookService bookService;
 
-    @GetMapping("{isbn13}")
+    @GetMapping("/book/{isbn13}")
     public BaseResponse<BookDTO> getBookDetail(@PathVariable String isbn13){
         BookDTO response = bookService.getBookDetail(isbn13);
         return new BaseResponse<>(response);
