@@ -65,7 +65,7 @@ public class ReviewService {
     }
 
                 // 도서 전체 리뷰
-    public List<ReviewDTO>readAllByUser(String isbn13){
+    public List<ReviewDTO>readAllByUser(String isbn13 ,String token){
         // 해당 도서에 대한 전체 리뷰
         List<Review> reviews = reviewRepository.findByIsbn13(isbn13);
 
@@ -79,7 +79,8 @@ public class ReviewService {
                 .collect(Collectors.toList());
 
         // 유저 정보 가져오기
-        List<UserDTO> users = userFeignClient.getInfoForReview(userIds);
+
+        List<UserDTO> users = userFeignClient.getInfoForReview(userIds, token);
 
         Map<Long, UserDTO> usermap = users.stream()
                 .collect(Collectors.toMap(UserDTO::getUserId, user->user));

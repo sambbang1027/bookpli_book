@@ -49,6 +49,7 @@ public class LibraryController {
 
     @GetMapping("/library/book-like/{userId}")
     public BaseResponse<List<BookLikeDTO>> getBookLikesByUserId(@PathVariable Long userId){
+        System.out.println("도착은 했고 ?");
         List<BookLikeDTO> response = libraryService.getBookLikesByUserId(userId);
         return new BaseResponse<>(response);
     }
