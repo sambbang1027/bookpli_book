@@ -2,6 +2,7 @@ package com.example.bookpli_book.miniroom.dto;
 
 import com.example.bookpli_book.entity.Book;
 import com.example.bookpli_book.entity.Library;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 public class LibraryDTO {
+    @JsonProperty("userId")
     private Long user_id;
     private String isbn13;
     private String status;

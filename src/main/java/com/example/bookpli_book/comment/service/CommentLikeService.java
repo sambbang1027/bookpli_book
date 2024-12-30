@@ -5,6 +5,7 @@ import com.example.bookpli_book.comment.repository.CommentLikeRepository;
 import com.example.bookpli_book.entity.CommentLike;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -23,6 +24,7 @@ public class CommentLikeService {
     }
 
     // 좋아요 && 취소 기능
+    @Transactional
     public boolean commentLike (CommentLikeDTO commentLikeDTO) {
 
         Long userId = commentLikeDTO.getUserId();
