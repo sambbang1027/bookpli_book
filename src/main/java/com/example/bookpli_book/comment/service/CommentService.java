@@ -9,6 +9,7 @@ import com.example.bookpli_book.entity.Comment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +66,7 @@ public class CommentService {
     }
 
             // 댓글 등록
+    @Transactional
     public boolean insert (CommentDTO commentDTO){
 
         if(commentDTO == null) {
@@ -78,6 +80,7 @@ public class CommentService {
     }
 
             //  댓글 수정
+    @Transactional
     public boolean update (CommentDTO commentDTO){
 
         if(commentDTO == null){
@@ -92,6 +95,7 @@ public class CommentService {
     }
 
             // 댓글 삭제
+     @Transactional
     public boolean delete (Long commentId){
         Comment existing = commentRepository.findById(commentId)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.COMMENT_NOT_FOUND));

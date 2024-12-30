@@ -32,7 +32,7 @@ public class ReadingGoalController {
 
     //library 등록
 
-    @PutMapping("/register/{isbn13}")
+    @PutMapping("/goal/register/{isbn13}")
     public ResponseEntity<String> bookGoal(@PathVariable String isbn13,
                                            @RequestBody LibraryDTO libraryDTO) {
 
@@ -47,7 +47,6 @@ public class ReadingGoalController {
         try {
             // ISBN 존재 여부 확인
             Optional<Library> existingLibrary = libraryrep.findByUserIdAndIsbn13(libraryDTO.getUser_id(), isbn13);
-
             // 존재하지 않으면 새로 추가
             if (existingLibrary.isEmpty()) {
                 // Book 엔티티 조회 또는 생성

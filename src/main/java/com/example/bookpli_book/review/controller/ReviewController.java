@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @RestController
@@ -22,8 +23,8 @@ public class ReviewController {
 
     // 해당 유저가 작성한 리뷰 전체 조회
     @GetMapping("/review/myreview/{userId}")
-    public BaseResponse<List<ReviewDTO>> getListByUserId (@PathVariable Long userId ){
-        List<ReviewDTO> mylist = reviewService.readAllByIsbn(userId);
+    public BaseResponse<Set<ReviewDTO>> getListByUserId (@PathVariable Long userId ){
+        Set<ReviewDTO> mylist = reviewService.readAllByIsbn(userId);
         System.out.println(mylist);
 
         return new BaseResponse<>(mylist);
@@ -32,12 +33,7 @@ public class ReviewController {
     // 해당 도서의 리뷰 전체 조회
     @GetMapping("/review/book/{isbn13}")
     public BaseResponse<List<ReviewDTO>> getListByisbn (@PathVariable String isbn13,
-                                                        @RequestHeader("Authorization") String authorizationHeader){
-        // "Bearer " 부분을 제외하고 토큰만 추출
-        String token = authorizationHeader.replace("Bearer ", "");
-
-        // 받은 token을 이용해서 필요한 인증 처리 또는 비즈니스 로직 실행
-        System.out.println("Received Token: " + token);
+                                                        @RequestHeader("Authorization") String token){
 
         List<ReviewDTO> review = reviewService.readAllByUser(isbn13,token);
         System.out.println("컨트롤러 : 도서 리뷰 전체 출력 : "+ review);

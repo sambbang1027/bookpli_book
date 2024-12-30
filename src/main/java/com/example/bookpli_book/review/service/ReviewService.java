@@ -26,80 +26,55 @@ public class ReviewService {
 
 
                         // 유저의 전체 리뷰
-    public List<ReviewDTO> readAllByIsbn(Long userId){
-        // 유저의 리뷰
-        List<Review> reviews = reviewRepository.findByUserId(userId);
+                        public Set<ReviewDTO> readAllByIsbn(Long userId) {
+                            // 유저의 리뷰
+                            List<Review> reviews = reviewRepository.findByUserId(userId);
 
-        if(reviews.isEmpty()){
-            return Collections.emptyList();
-        }
+                            if (reviews.isEmpty()) {
+                                return Collections.emptySet(); // 빈 Set 반환
+                            }
 
-        // isbn 리스트
-        List<String>isbns = reviews.stream().map(review ->
-                        review.getIsbn13())
-                        .collect(Collectors.toList());
+                            // isbn 리스트
+                            Set<String> isbns = reviews.stream()
+                                    .map(review -> review.getIsbn13())
+                                    .collect(Collectors.toSet()); // Set으로 변경
 
-        // 리뷰의 북 정보
-        List<BookDTO>books = bookFeignClient.getBookByisbn(isbns);
+                            // 리뷰의 북 정보
+                            List<BookDTO> books = bookFeignClient.getBookByisbn(new ArrayList<>(isbns));
 
-        // 책 정보를 isbn으로 Map 변환
-        Map<String, BookDTO> bookmap = books.stream()
-                .collect(Collectors.toMap(BookDTO::getIsbn13, book->book));
+                            // 책 정보를 isbn으로 Map 변환
+                            Map<String, BookDTO> bookmap = books.stream()
+                                    .collect(Collectors.toMap(BookDTO::getIsbn13, book -> book));
 
-        List<ReviewDTO> reviewDTOS = reviews.stream()
-                .map(review -> { // 리뷰에 맞는 책 찾기
-                    BookDTO bookDTO = bookmap.get(review.getIsbn13()); // 책 매칭
+                            Set<ReviewDTO> reviewDTOS = reviews.stream()
+                                    .map(review -> { // 리뷰에 맞는 책 찾기
+                                        BookDTO bookDTO = bookmap.get(review.getIsbn13()); // 책 매칭
 
-                    return ReviewDTO.builder()
-                            .isbn13(review.getIsbn13())
-                            .reviewId(review.getReviewId())
-                            .reviewContent(review.getReviewContent())
-                            .rating(review.getRating())
-                            .userId(review.getUserId())
-                            .title(bookDTO.getTitle())
-                            .cover(bookDTO.getCover())
-                            .build();
-                }).collect(Collectors.toList());
+                                        return ReviewDTO.builder()
+                                                .isbn13(review.getIsbn13())
+                                                .reviewId(review.getReviewId())
+                                                .reviewContent(review.getReviewContent())
+                                                .rating(review.getRating())
+                                                .userId(review.getUserId())
+                                                .title(bookDTO.getTitle())
+                                                .cover(bookDTO.getCover())
+                                                .build();
+                                    })
+                                    .collect(Collectors.toSet()); // Set으로 변경
 
-        return reviewDTOS;
-    }
+                            return reviewDTOS;
+                        }
 
-                // 도서 전체 리뷰
+
+    // 도서 전체 리뷰
     public List<ReviewDTO>readAllByUser(String isbn13 ,String token){
         // 해당 도서에 대한 전체 리뷰
-        List<Review> reviews = reviewRepository.findByIsbn13(isbn13);
+        List<ReviewDTO> reviews = reviewRepository.findByIsbn13(isbn13);
 
         if(reviews.isEmpty()){
             return Collections.emptyList();
         }
-
-        //userId 추출
-        List<Long> userIds = reviews.stream()
-                .map(review -> review.getUserId())
-                .collect(Collectors.toList());
-
-        // 유저 정보 가져오기
-
-        List<UserDTO> users = userFeignClient.getInfoForReview(userIds, token);
-
-        Map<Long, UserDTO> usermap = users.stream()
-                .collect(Collectors.toMap(UserDTO::getUserId, user->user));
-
-        // 유저정보 + 리뷰
-        return reviews.stream()
-                .map(review -> {
-                    UserDTO userdto = usermap.get(review.getUserId());
-
-                    return ReviewDTO.builder()
-                            .reviewId(review.getReviewId())
-                            .isbn13(review.getIsbn13())
-                            .userId(review.getUserId())
-                            .reviewContent(review.getReviewContent())
-                            .rating(review.getRating())
-                            .userNickname(userdto.getUserNickname())
-                            .profilePath(userdto.getProfilePath())
-                            .build();
-                }).collect(Collectors.toList());
+        return reviews;
     }
 
 
@@ -135,6 +110,7 @@ public class ReviewService {
     }
 
     // 리뷰 삭제
+    @Transactional
     public Boolean remove (Long reviewId){
         try {
             reviewRepository.deleteById(reviewId);

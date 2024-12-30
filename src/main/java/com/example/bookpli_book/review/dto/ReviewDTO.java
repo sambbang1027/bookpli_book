@@ -21,6 +21,16 @@ public class ReviewDTO {
     private String userNickname;
     private String profilePath;
 
+    public ReviewDTO(Long reviewId, Long userId, String isbn13,
+                     String reviewContent, Integer rating,String userNickname, String profilePath){
+        this.reviewId = reviewId;
+        this.userId = userId;
+        this.isbn13 = isbn13;
+        this.reviewContent = reviewContent;
+        this.rating = rating;
+        this.userNickname = userNickname;
+        this.profilePath = profilePath;
+    }
 
     // dto -> entity
     public Review toEntity(){
